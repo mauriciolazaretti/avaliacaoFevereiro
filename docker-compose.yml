@@ -1,0 +1,28 @@
+version: '3.4'
+
+services:
+  frontend:
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    ports: 
+     - "8000:3000"
+    depends_on: 
+      - aplicacaobackend
+  aplicacaobackend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+    - "5000:5000"
+    depends_on:
+    - database
+  database:
+    ports:
+    - "5432:5432"
+    image: postgres
+    restart: always
+    environment:
+        POSTGRES_PASSWORD: 123
+        POSTGRES_DB: avaliacao_gs
+        POSTGRES_USER: postgres
